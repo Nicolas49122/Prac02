@@ -18,3 +18,7 @@ CREATE TABLE productos (
 INSERT INTO productos (nombre, descripcion, precio) VALUES
 ('Laptop', 'Laptop de prueba', 1200.00),
 ('Mouse', 'Mouse gamer', 50.00);
+
+
+INSERT INTO clientes (nombre, usuario, password) VALUES
+('Test User', 'testuser', 'testpassword');
