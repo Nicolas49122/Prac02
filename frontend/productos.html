@@ -1,0 +1,60 @@
+<!-- productos.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Productos - App</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <h2 class="mb-4 text-center">Catálogo de Productos</h2>
+        <table class="table table-hover table-bordered shadow-sm bg-white">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Precio (USD)</th>
+            </tr>
+          </thead>
+          <tbody id="productosTableBody"></tbody>
+        </table>
+        <div class="text-center mt-4">
+          <a href="index.html" class="btn btn-secondary">Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS & Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('http://3.148.199.201:4000/api/productos');
+        const data = await res.json();
+        const tbody = document.getElementById('productosTableBody');
+        tbody.innerHTML = '';
+        data.productos.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${p[0]}</td>
+            <td>${p[1]}</td>
+            <td>${p[2]}</td>
+            <td>${parseFloat(p[3]).toFixed(2)}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error('Error al cargar productos:', err);
+      }
+    });
+  </script>
+</body>
+</html>
+
