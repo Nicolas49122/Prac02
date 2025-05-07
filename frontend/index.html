@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Clientes</title></head>
+<body>
+    <h1>Login</h1>
+    <input id="usuario" placeholder="Usuario">
+    <input id="password" type="password" placeholder="Contraseña">
+    <button onclick="login()">Iniciar sesión</button>
+    <pre id="respuesta"></pre>
+
+    <script>
+        function login() {
+            fetch('http://localhost:4000/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    usuario: document.getElementById('usuario').value,
+                    password: document.getElementById('password').value
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.clientes) {
+                    document.getElementById('respuesta').innerText =
+                        JSON.stringify(data.clientes, null, 2);
+                    // Fetch productos también
+                    fetch('http://localhost:4000/api/productos')
+                        .then(res => res.json())
+                        .then(prod => console.log('Productos:', prod));
+                } else {
+                    document.getElementById('respuesta').innerText = data.msg;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
